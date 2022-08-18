@@ -16,6 +16,15 @@ struct CustomDivider: View {
     }
 }
 
+struct SectionTitle: View {
+    let text: String
+    var body: some View {
+        Text(text)
+            .font(.title.bold())
+            .padding(.bottom, 5)
+    }
+}
+
 struct MissionView: View {
     struct CrewMember {
         let role: String
@@ -40,21 +49,20 @@ struct MissionView: View {
         GeometryReader { geo in
             ScrollView {
                 VStack {
-                    Image(mission.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: geo.size.width * 0.6)
+                    VStack {
+                        Image(mission.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: geo.size.width * 0.6)
                         .padding(.top)
+                        Text(mission.formattedLaunchDate == "N/A" ? "" : "Launch Date: \(mission.formattedLaunchDate)")
+                    }
                     VStack(alignment: .leading) {
                         CustomDivider()
-                        Text("Mission Highlights")
-                            .font(.title.bold())
-                            .padding(.bottom, 5)
+                        SectionTitle(text: "Mission Highlights")
                         Text(mission.description)
                         CustomDivider()
-                        Text("Crew")
-                            .font(.title.bold())
-                            .padding(.bottom, 5)
+                        SectionTitle(text: "Crew")
                     }
                     .padding(.horizontal)
                     
